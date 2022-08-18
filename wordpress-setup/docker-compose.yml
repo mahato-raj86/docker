@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  raj86_db:
+    image: mysql
+    volumes:
+      - raj86wp:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+
+  raj86_adminer:
+    image: adminer
+    ports:
+      - 8002:8080
+
+  raj86_wordpress:
+    image: wordpress
+    #it will build from the configuration file instead of hub image
+    # build: ./config  
+    volumes:
+      - ./plugins:/var/www/html/wp-content/plugins
+      - ./themes:/var/www/html/wp-content/themes
+    ports:
+      - 8003:80
+
+volumes:
+  raj86wp:
